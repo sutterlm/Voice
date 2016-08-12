@@ -1,0 +1,135 @@
+Sonus 52xx ATT IP FLEX and IPTF Build Examples
+ATT requires a certification process to be completed. inContact has completed a subset of certification matrix that satisfy Contact Center solutions. 
+ATT IP Flex and IP TF is a retail product. This is something ATT partner customer or customer may provide to inContact for a CloudConnect solution. 
+
+It requires Unique IP's for each customer. There is a Configuation Guide that should be handed off by the Connectivity team during Design. 
+
+
+inContactCustomerConfigurationGuideRev2 (Click Here) 
+
+Below is an example customer build on LA/DAL NBS.
+
+
+LA2
+set addressContext default ipInterfaceGroup UNTRUST_4593365_ATT
+
+commit
+
+ 
+
+set addressContext default ipInterfaceGroup UNTRUST_4593365_ATT ipInterface UNTRUST_IPIF2.75 ceName LAXNBS01A portName pkt2 ipAddress 12.56.6.203 prefix 29 mode inService state enabled vlanTag 75
+
+set addressContext default ipInterfaceGroup UNTRUST_4593365_ATT ipInterface UNTRUST_IPIF3.75 ceName LAXNBS01A portName pkt3 ipAddress 12.56.6.204 prefix 29 mode inService state enabled vlanTag 75
+
+commit
+
+ 
+
+set addressContext default staticRoute 0.0.0.0 0 12.56.6.201 UNTRUST_4593365_ATT UNTRUST_IPIF2.75 preference 100
+
+set addressContext default staticRoute 0.0.0.0 0 12.56.6.201 UNTRUST_4593365_ATT UNTRUST_IPIF3.75 preference 100
+
+commit
+
+ 
+
+set addressContext default ipAccessControlList rule DENYALL_4593365_ATT precedence 65035 ipInterfaceGroup UNTRUST_4593365_ATT action discard fillRate unlimited bucketSize unlimited​ state disabled
+
+commit
+
+ 
+
+set addressContext default ipAccessControlList rule DENYALL_4593365_ATT state enabled
+
+commit
+
+ 
+
+ 
+
+set addressContext default ipAccessControlList rule ALLOW_ICMP_4593365_ATT precedence 64035 protocol icmp ipInterfaceGroup UNTRUST_4593365_ATT fillRate 10 bucketSize 10 state disabled
+
+commit
+
+ 
+
+set addressContext default ipAccessControlList rule ALLOW_ICMP_4593365_ATT state enabled
+
+commit
+
+ 
+
+set addressContext default zone UNTRUST_4593365_ATT id 3202
+
+set addressContext default zone UNTRUST_4593365_ATT sipSigPort 3202 ipInterfaceGroupName UNTRUST_4593365_ATT ipAddressV4 12.56.6.202
+
+set addressContext default zone UNTRUST_4593365_ATT sipSigPort 3202 transportProtocolsAllowed sip-udp,sip-tcp state enabled
+
+set addressContext default zone UNTRUST_4593365_ATT sipSigPort 3202 dscpValue 28
+
+commit
+
+ 
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+DAL2
+set addressContext default ipInterfaceGroup UNTRUST_4593365_ATT
+
+commit
+
+ 
+
+set addressContext default ipInterfaceGroup UNTRUST_4593365_ATT ipInterface UNTRUST_IPIF2.75 ceName DALNBS01A portName pkt2 ipAddress 12.56.6.11 prefix 29 mode inService state enabled vlanTag 75
+
+set addressContext default ipInterfaceGroup UNTRUST_4593365_ATT ipInterface UNTRUST_IPIF3.75 ceName DALNBS01A portName pkt3 ipAddress 12.56.6.12 prefix 29 mode inService state enabled vlanTag 75
+
+commit
+
+ 
+
+set addressContext default staticRoute 0.0.0.0 0 12.56.6.9 UNTRUST_4593365_ATT UNTRUST_IPIF2.75 preference 100
+
+set addressContext default staticRoute 0.0.0.0 0 12.56.6.9 UNTRUST_4593365_ATT UNTRUST_IPIF3.75 preference 100
+
+commit
+
+ 
+
+ 
+
+set addressContext default ipAccessControlList rule DENYALL_4593365_ATT precedence 65035 ipInterfaceGroup UNTRUST_4593365_ATT action discard fillRate unlimited bucketSize unlimited​ state disabled
+
+commit
+
+ 
+
+set addressContext default ipAccessControlList rule DENYALL_4593365_ATT state enabled
+
+commit
+
+ 
+
+ 
+
+set addressContext default ipAccessControlList rule ALLOW_ICMP_4593365_ATT precedence 64035 protocol icmp ipInterfaceGroup UNTRUST_4593365_ATT fillRate 10 bucketSize 10 state disabled
+
+commit
+
+ 
+
+set addressContext default ipAccessControlList rule ALLOW_ICMP_4593365_ATT state enabled
+
+commit
+
+ 
+
+ 
+
+set addressContext default zone UNTRUST_4593365_ATT id 3010
+
+set addressContext default zone UNTRUST_4593365_ATT sipSigPort 3010 ipInterfaceGroupName UNTRUST_4593365_ATT ipAddressV4 12.56.6.10
+
+set addressContext default zone UNTRUST_4593365_ATT sipSigPort 3010 transportProtocolsAllowed sip-udp,sip-tcp state enabled
+
+set addressContext default zone UNTRUST_4593365_ATT sipSigPort 3010 dscpValue 28
